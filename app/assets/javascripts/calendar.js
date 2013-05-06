@@ -9,12 +9,12 @@ $(document).ready(function() {
 	    url: "/events",
 	    data: data,
 	    success: function() {
-		calendar.fullCalendar('refetchEvents');
+		calendar.fullCalendar("refetchEvents");
 	    }
 	});
     };
     
-    var updateEvent = function(event) {
+    var updateEvent = function(event, revertFunc) {
 	var url = "/events/" + event.id;
 	var data = {_method: 'PUT',
 		    event: {title: event.title,
@@ -26,34 +26,81 @@ $(document).ready(function() {
 	    url: url,
 	    data: data,
 	    success: function() {
+		calendar.fullCalendar("refetchEvents");
+	    },
+	    error: revertFunc
+	});
+    };
+
+    var deleteEvent = function(event) {
+	var url = "/events/" + event.id;
+	var data = {_method: 'DELETE'};
+	$.ajax({
+	    type: "POST",
+	    url: url,
+	    data: data,
+	    success: function() {
 		calendar.fullCalendar('refetchEvents');
-	    }
+	    },
 	});
     };
 
     var select = function(start, end, allDay) {
-	var title = window.prompt("title");
-	if (title) {
-	    createEvent(title, start, end, allDay);
-	}
-	calendar.fullCalendar('unselect');
+	createDialog.find("#title").val("");
+	createDialog.dialog("option", "buttons",
+			    [{text: "OK",
+			      click: function() {
+				  var title = createDialog.find("#title").val();
+				  if (title) {
+				      createEvent(title, start, end, allDay);
+				  }
+				  createDialog.dialog("close");
+			      }
+			     },
+			     {text: "Cancel", 
+			      click: function() {
+				  updateDialog.dialog("close");
+			      }
+			     }]);
+	createDialog.dialog("open");
+	calendar.fullCalendar("unselect");
     };
 
     var eventClick = function(event) {
-	event.title = window.prompt("title", event.title);
-	updateEvent(event);
+	updateDialog.find("#title").val(event.title);
+	updateDialog.dialog("option", "buttons", 
+			    [{text: "OK", 
+			      click: function() {
+				  event.title = updateDialog.find("#title").val();
+				  updateEvent(event, function(){});
+				  updateDialog.dialog("close");
+			      }
+			     },
+			     {text: "Delete", 
+			      click: function() {
+				  deleteEvent(event);
+				  updateDialog.dialog("close");
+			      }
+			     },
+			     {text: "Cancel", 
+			      click: function() {
+				  updateDialog.dialog("close");
+			      }
+			     }
+			]);
+	updateDialog.dialog("open");
     };
 
     var eventResize = function(event, dayDelta, minuteDelta, revertFunc) {
-	updateEvent(event);
+	updateEvent(event, revertFunc);
     };
 
     var eventDrop = function(event, dayDelta, minuteDelta, revertFunc) {
-	updateEvent(event);
+	updateEvent(event, revertFunc);
     };
 
-    var calendar = $('#calendar').fullCalendar({
-	events: '/events.json',
+    var calendar = $("#calendar").fullCalendar({
+	events: "/events.json",
 	selectable: true,
 	selectHelper: true,
 	ignoreTimezone: false,
@@ -63,4 +110,17 @@ $(document).ready(function() {
 	eventResize: eventResize,
 	eventDrop: eventDrop
     });
+
+    var createDialog = $("#eventdialog").dialog({
+	autoOpen: false,
+	modal: true,
+	title: "Create Event"
+    });
+
+    var updateDialog = $("#eventdialog").dialog({
+	autoOpen: false,
+	modal: true,
+	title: "Edit Event"
+    });
+
 });
