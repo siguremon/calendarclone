@@ -42,6 +42,18 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
 
+    p "************************************"
+    p params[:event]
+    p @event.start.to_s
+    p @event.end.to_s
+
+    @event.start = @event.start.gmtime
+    @event.end = @event.end.gmtime
+
+    p "************************************"
+    p @event.start.to_s
+    p @event.end.to_s
+
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
