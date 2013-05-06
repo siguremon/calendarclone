@@ -1,9 +1,5 @@
 $(document).ready(function() {
-    var select = function(start, end, allDay) {
-	console.log('start:' + start);
-	console.log('end:' + end);
-	console.log('allDay:' + allDay);
-	var title = window.prompt("title");
+    var createEvent = function(title, start, end, allDay) {
 	var data = {event: {title: title,
 			    start: start,
 			    end: end, 
@@ -16,14 +12,12 @@ $(document).ready(function() {
 		calendar.fullCalendar('refetchEvents');
 	    }
 	});
-	calendar.fullCalendar('unselect');
     };
-
-    var eventClick = function(event, jsEvent, view) {
-	var title = window.prompt("title", event.title);
+    
+    var updateEvent = function(event) {
 	var url = "/events/" + event.id;
 	var data = {_method: 'PUT',
-		    event: {title: title,
+		    event: {title: event.title,
 			    start: event.start,
 			    end: event.end, 
 			    allDay: event.allDay}};
@@ -37,12 +31,31 @@ $(document).ready(function() {
 	});
     };
 
+    var select = function(start, end, allDay) {
+	var title = window.prompt("title");
+	if (title) {
+	    createEvent(title, start, end, allDay);
+	}
+	calendar.fullCalendar('unselect');
+    };
+
+    var eventClick = function(event) {
+	event.title = window.prompt("title", event.title);
+	updateEvent(event);
+    };
+
+    var eventResize = function(event, dayDelta, minuteDelta, revertFunc) {
+	updateEvent(event);
+    };
+
     var calendar = $('#calendar').fullCalendar({
 	events: '/events.json',
 	selectable: true,
 	selectHelper: true,
 	ignoreTimezone: false,
+	editable: true,
 	select: select,
-	eventClick: eventClick
+	eventClick: eventClick,
+	eventResize: eventResize
     });
 });
