@@ -44,6 +44,7 @@ class EventsController < ApplicationController
 
     p "************************************"
     p params[:event]
+    p params[:event][:start]
     p @event.start.to_s
     p @event.end.to_s
 

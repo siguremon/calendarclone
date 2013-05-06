@@ -2,7 +2,7 @@
 
 one:
   title: MyString
-  start: 2013-04-28 21:19:00
+  start: "Wed, 08 May 2013 00:00:00 GMT"
   end: 2013-04-28 21:19:00
   color: MyString
   allDay: false

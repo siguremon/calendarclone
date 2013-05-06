@@ -2,7 +2,7 @@ $(document).ready(function() {
     var createEvent = function(title, start, end, allDay) {
 	var data = {event: {title: title,
 			    start: start,
-			    end: end, 
+			    end: end,
 			    allDay: allDay}};
 	$.ajax({
 	    type: "POST",
@@ -19,7 +19,7 @@ $(document).ready(function() {
 	var data = {_method: 'PUT',
 		    event: {title: event.title,
 			    start: event.start,
-			    end: event.end, 
+			    end: event.end,
 			    allDay: event.allDay}};
 	$.ajax({
 	    type: "POST",
