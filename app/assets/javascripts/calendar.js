@@ -108,7 +108,17 @@ $(document).ready(function() {
 	select: select,
 	eventClick: eventClick,
 	eventResize: eventResize,
-	eventDrop: eventDrop
+	eventDrop: eventDrop,
+	timeFormat: {
+	    agenda: "hh:mm{ - hh:mm}",
+	    "": "HH:mm"
+	},
+	axisFormat: "HH:mm",
+	header: {
+	    left: 'prev,next today',
+	    center: 'title',
+	    right: 'month,agendaWeek,agendaDay'
+	}
     });
 
     var createDialog = $("#eventdialog").dialog({

@@ -1,7 +1,6 @@
 Calendarclone::Application.routes.draw do
+  root :to => "calendar#index"
   resources :events
-
-
   get "calendar/index"
 
   # The priority is based upon order of creation:
