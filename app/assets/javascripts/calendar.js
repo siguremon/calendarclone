@@ -48,6 +48,10 @@ $(document).ready(function() {
 	updateEvent(event);
     };
 
+    var eventDrop = function(event, dayDelta, minuteDelta, revertFunc) {
+	updateEvent(event);
+    };
+
     var calendar = $('#calendar').fullCalendar({
 	events: '/events.json',
 	selectable: true,
@@ -56,6 +60,7 @@ $(document).ready(function() {
 	editable: true,
 	select: select,
 	eventClick: eventClick,
-	eventResize: eventResize
+	eventResize: eventResize,
+	eventDrop: eventDrop
     });
 });
