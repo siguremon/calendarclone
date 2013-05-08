@@ -48,8 +48,8 @@ class EventsController < ApplicationController
     p @event.start.to_s
     p @event.end.to_s
 
-    @event.start = @event.start.gmtime
-    @event.end = @event.end.gmtime
+    # @event.start = @event.start.gmtime
+    # @event.end = @event.end.gmtime
 
     p "************************************"
     p @event.start.to_s

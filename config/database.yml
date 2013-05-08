@@ -20,6 +20,6 @@ test:
 
 production:
   adapter: postgresql
-  database: postgres://wpqwkigmyonsyk:Ms2GoJN-CRx9DoR-_7hGVd73mJ@ec2-54-225-84-29.compute-1.amazonaws.com:5432/d17l4593sk99hb
+  database: postgres://localhost
   pool: 5
   timeout: 5000
