@@ -55,15 +55,16 @@ $(document).ready(function() {
 				      createEvent(title, start, end, allDay);
 				  }
 				  createDialog.dialog("close");
+				  calendar.fullCalendar("unselect");
 			      }
 			     },
 			     {text: "Cancel", 
 			      click: function() {
 				  updateDialog.dialog("close");
+				  calendar.fullCalendar("unselect");
 			      }
 			     }]);
 	createDialog.dialog("open");
-	calendar.fullCalendar("unselect");
     };
 
     var eventClick = function(event) {
@@ -74,17 +75,20 @@ $(document).ready(function() {
 				  event.title = updateDialog.find("#title").val();
 				  updateEvent(event, function(){});
 				  updateDialog.dialog("close");
+				  calendar.fullCalendar("unselect");
 			      }
 			     },
 			     {text: "Delete", 
 			      click: function() {
 				  deleteEvent(event);
 				  updateDialog.dialog("close");
+				  calendar.fullCalendar("unselect");
 			      }
 			     },
 			     {text: "Cancel", 
 			      click: function() {
 				  updateDialog.dialog("close");
+				  calendar.fullCalendar("unselect");
 			      }
 			     }
 			]);
