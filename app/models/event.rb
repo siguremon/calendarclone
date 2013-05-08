@@ -18,6 +18,6 @@ class Event < ActiveRecord::Base
   end
 
   def end=(_end)
-    write_attribute(:start, _parse(_end))
+    write_attribute(:end, _parse(_end))
   end
 end
