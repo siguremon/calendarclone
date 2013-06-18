@@ -19,6 +19,8 @@ end
 
 gem 'jquery-rails'
 
-group :test do
+group :test, :development do
   gem 'rspec-rails'
+  gem 'evergreen', :require =>'evergreen/rails'
+  gem 'capybara-webkit'
 end
