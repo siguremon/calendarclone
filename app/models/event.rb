@@ -14,10 +14,18 @@ class Event < ActiveRecord::Base
   end
 
   def start=(start)
-    write_attribute(:start, _parse(start))
+    if(start.is_a?(String)) 
+      write_attribute(:start, _parse(start))
+    else
+      super(start)
+    end
   end
 
   def end=(_end)
-    write_attribute(:end, _parse(_end))
+    if(_end.is_a?(String))
+      write_attribute(:end, _parse(_end))
+    else
+      super(_end)
+    end
   end
 end

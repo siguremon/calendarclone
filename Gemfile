@@ -18,3 +18,9 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'evergreen', :require =>'evergreen/rails'
+  gem 'capybara-webkit'
+end
