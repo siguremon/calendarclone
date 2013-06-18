@@ -1,9 +1,11 @@
 $(document).ready(function() {
     var createEvent = function(title, start, end, allDay) {
-	var data = {event: {title: title,
-			    start: start,
-			    end: end,
-			    allDay: allDay}};
+	var event = {title: title,
+		     start: start,
+		     end: end,
+		     allDay: allDay};
+	var data = {event: event};
+
 	$.ajax({
 	    type: "POST",
 	    url: "/events",
@@ -40,7 +42,7 @@ $(document).ready(function() {
 	    url: url,
 	    data: data,
 	    success: function() {
-		calendar.fullCalendar('refetchEvents');
+		calendar.fullCalendar("updateEvent", event);
 	    },
 	});
     };
@@ -136,5 +138,4 @@ $(document).ready(function() {
 	modal: true,
 	title: "Edit Event"
     });
-
 });
